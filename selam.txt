@@ -1,2 +1,0 @@
-Merhaba bu zamazon sitesinin ilk gelişim aşaması testidir.
- DDDD

@@ -10,10 +10,12 @@ const state = reactive({
     cleanProduct: Array,
     filter: '/',
     rand10: Array,
+    pagination: 0,
     categoriesdict: Array,
     shoppingcart: [],
     wishlist: [],
     cost: 0,
+    page:1,
 })
 const methods = {
     toggleDrawer(){
@@ -23,7 +25,7 @@ const methods = {
         
      return state.drawer = !state.drawer;
     },
-     fetchdata(){
+    fetchdata(){
         fetch('https://raw.githubusercontent.com/christkv/ecommerce/master/preload_data/categories.json')
         .then(x => x.json())
         .then(x => state.rawCategories = x)
@@ -34,7 +36,7 @@ const methods = {
         .then(x => x.json())
         .then(x => state.rawProduct = x)
         .then(() => methods.cleandata())
-        .then(() =>methods.categorize_get(state.filter))
+        .then(() =>methods.categorize_get(1))
     },
     lister(){
         for(const item of state.rawCategories){
@@ -47,7 +49,7 @@ const methods = {
     },
     cleandata(){
         let ok = 0
-        let id = -1
+        let id = 5
         const stack = []
         stack.push(state.rawProduct[0])
         for(const item of state.rawProduct){
@@ -74,30 +76,24 @@ const methods = {
         
         state.cleanProduct = stack
     },
-    categorize_get(){
+    categorize_get(arg){
         const stack= []
-        const rand12= []
         for(const item of state.cleanProduct){
             if(item.category.includes(state.filter)){
                 stack.push(item)
             }
         }
+        state.pagination = Math.ceil(stack.length / 12 )
+
         const b = (12 > stack.length) ? stack.length : 12
-        for(let i = 0; i < b; i++){
-            let a = Math.floor(Math.random()*stack.length)
-            rand12[i] = stack[a]
-            stack.splice(a,1)
-        }
-        
-        state.rand10 = rand12.sort(() => Math.random())
-        
+        state.rand10 = stack.sort(() => Math.random() -0.5*Number(arg)).slice(0+12*(state.page-1),b +12*(state.page-1)) 
     },
 
     filterchange(arg1){
         
         state.filter = String(arg1)
         
-        methods.categorize_get()
+        methods.categorize_get(0)
     },
     createdict(){
         let myDict = state.parents.map((category,index) => {
@@ -107,22 +103,19 @@ const methods = {
 
     },
     listreview(product,arg,liste){
-        console.log(liste)
         if(arg == '+'){
             liste.push(product)
             if(liste === state.shoppingcart){
                 state.cost += product.price
             }
-            console.log(product)
         }
         else if(arg == '-') {
             liste.splice(liste.indexOf(product),1)
             if(liste == state.shoppingcart){
                 state.cost -= product.price
             }
-            console.log(product)
         }
-    }
+    },
 }
 
 export default{

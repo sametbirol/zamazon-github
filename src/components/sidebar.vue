@@ -48,7 +48,6 @@
 </template>
 
 <script>
-//click.stop="drawer=!drawer"
 import { inject,onBeforeMount} from 'vue'
 export default {
   name: 'HomeComp',

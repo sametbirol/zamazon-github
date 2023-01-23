@@ -1,11 +1,11 @@
 <template>
 	<v-row>
-		<label style="font-size:x-large; font-family:Arial, Helvetica, sans-serif"></label>
+		<label style="font-size:xx-large; font-family:Arial, Helvetica, sans-serif; margin-top: 30px; margin-left: 170px;">Products</label>
 	</v-row>
 	
 
-	<v-container fluid>
-		<v-row dense>
+	<v-container dense>
+		<v-row fluid>
 			<v-col
 			v-for="card in store.state.rand10"
 			:key="card.title"
@@ -35,23 +35,23 @@
 			</v-card>
 		</v-col>
 		</v-row>
-
-	</v-container>
-  
-	<v-footer style="margin-left:300px">
+		<v-footer style="margin-left:300px">
 		<div>
-		<v-pagination
-			v-model="page"
-			:length="() => store.state.rand10.length % 10"
+			<v-pagination
+			v-model="store.state.page"
+			:length="store.state.pagination"
 			:total-visible="7"
-		></v-pagination>
+			@click="store.methods.categorize_get(0)"
+			></v-pagination>
 		</div>
 	</v-footer>
+	</v-container>
+  
+	
 
 </template>
 
 <script>
-//click.stop="drawer=!drawer"
 import { inject } from 'vue'
 
 export default {

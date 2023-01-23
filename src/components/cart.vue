@@ -22,11 +22,10 @@
 </template>
 
 <script>
-//click.stop="drawer=!drawer"
 import { inject } from 'vue'
 
 export default {
-  name: 'Home',
+  name: 'CartComp',
   setup(){
     const store = inject('store')
 

@@ -4,7 +4,7 @@
     app
     z-index="1">
     <toggleside/>
-    <v-toolbar-title 
+    <v-toolbar-title style="cursor: pointer" @click="$router.push('/')"
     id="title">ZAMAZON
     </v-toolbar-title>
     <wishlist /> 

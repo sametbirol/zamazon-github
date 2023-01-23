@@ -6,19 +6,22 @@
 		</div>
 		<br>
 		<div>
-			<label >
-				Price: <pre style="color:green"> {{ card.price }} </pre>
-				<v-btn style="float: right; " @click="store.methods.listreview(card,'+',store.state.shoppingcart)">Add to Cart</v-btn>
-
-			</label>
+			<v-label>
+				Price: <pre style="color:green"> {{ card.price / 100 }}$ </pre>
+				<v-btn elevation="10" color="blue" @click="store.methods.listreview(card,'+',store.state.shoppingcart)">Add to Cart</v-btn>
+			</v-label>
+			<br>
+			<br>
+			<v-label>Category: {{ card.productgroup }}</v-label>
+			<br>
+			<v-label>Publisher: {{ card.manufacturer }}</v-label>
 		</div>
 		<br>
 		<div>
 			<v-expansion-panels>
-					<v-expansion-panel
-					title="Description"
-					:text=card.description
-					>
+					<v-expansion-panel>
+						<v-expansion-panel-title>Details</v-expansion-panel-title>
+						<v-expansion-panel-text v-html="card.description"></v-expansion-panel-text>
 					</v-expansion-panel>
 				</v-expansion-panels>
 		</div>

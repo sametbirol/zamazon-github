@@ -11,7 +11,6 @@
     </v-btn>
 </template>
 <script>
-//click.stop="drawer=!drawer"
 import { inject } from 'vue'
 
 export default {

@@ -1,22 +1,22 @@
 <template>
-	<v-row>
-		<label style="font-size:xx-large; font-family:Arial, Helvetica, sans-serif; margin-top: 30px; margin-left: 170px;">Products</label>
-	</v-row>
-	
-
 	<v-container dense>
+		<label style="font-size:xx-large;z-index: 1;">Products</label>
+		<br/>
+		<br/>
 		<v-row fluid>
 			<v-col
 			v-for="card in store.state.rand10"
 			:key="card.title"
 			>
 			<v-card width="250">
-			<router-link :to="`/product/${card.id}`">
+			<router-link 
+			style="text-decoration : none"
+			:to="`/product/${card.id}`">
 
 				<v-img
 				:src="card.images.large.url"
 				class="align-end"
-				gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,0.8)"
+				gradient="to bottom, rgba(0,0,0,.01), rgba(0,0,0,0.6)"
 				height="300px"
 				>
 				<v-card-title class="text-white" v-text="card.title"></v-card-title>
@@ -35,7 +35,7 @@
 			</v-card>
 		</v-col>
 		</v-row>
-		<v-footer style="margin-left:300px">
+		<v-footer class="justify-center" >
 		<div>
 			<v-pagination
 			v-model="store.state.page"
@@ -45,7 +45,7 @@
 			></v-pagination>
 		</div>
 	</v-footer>
-	</v-container>
+</v-container>
   
 	
 
@@ -56,6 +56,7 @@ import { inject } from 'vue'
 
 export default {
   name: 'HomeComp',
+
   setup(){
     const store = inject('store')
 

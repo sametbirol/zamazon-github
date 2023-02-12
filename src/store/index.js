@@ -49,7 +49,7 @@ const methods = {
     },
     cleandata(){
         let ok = 0
-        let id = 5
+        let id = 0
         const stack = []
         stack.push(state.rawProduct[0])
         for(const item of state.rawProduct){
@@ -69,11 +69,10 @@ const methods = {
                 }
                 stack.push(item)
             }
-            stack.forEach(element => {
-                element.id = id++
-            });
-            }
-        
+        }
+        stack.forEach(element => {
+            element.id = id++
+        });
         state.cleanProduct = stack
     },
     categorize_get(arg){

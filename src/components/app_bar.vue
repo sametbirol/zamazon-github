@@ -1,12 +1,15 @@
 <template>
-<v-app-bar  
-    id="appbar" 
-    app
-    z-index="1">
+<v-app-bar
+  id="appbar"
+  z-index="1"
+  app
+>
     <toggleside/>
-    <v-toolbar-title style="cursor: pointer" @click="$router.push('/')"
-    id="title">ZAMAZON
-    </v-toolbar-title>
+    <v-toolbar-title
+      style="cursor: pointer"
+      @click="$router.push('/')"
+      id="title">ZAMAZON
+      </v-toolbar-title>
     <wishlist /> 
     <cartbutton />
 </v-app-bar>

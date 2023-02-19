@@ -20,8 +20,8 @@
         <v-list-item
           v-for="item in store.state.categoriesdict"
           :key="item.name"
-          link
           @click="store.state.categoriesdict[item.id].open = !store.state.categoriesdict[item.id].open"
+          link
         >
 
           <v-list-item-content >
@@ -31,11 +31,11 @@
               @click="store.methods.toggleDrawer"
             >
               <v-list-item
-                  v-for="el in store.state.children[item.id]"
-                  :key="el"
-                  link
-                  @click="store.methods.filterchange(el)"
-                >  
+                v-for="el in store.state.children[item.id]"
+                :key="el"
+                @click="store.methods.filterchange(el)"
+                link
+              > 
                 <v-list-item-content >
                   <v-list-item-title >{{ el }}</v-list-item-title>
                 </v-list-item-content>

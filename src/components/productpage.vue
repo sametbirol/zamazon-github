@@ -6,22 +6,25 @@
 		</div>
 		<br>
 		<div>
-			<v-label>
-				Price: <pre style="color:green"> {{ card.price / 100 }}$ </pre>
+			<p>
+				Price: <em style="color:green">{{ card.price / 100 }}$</em>
 				<v-btn elevation="10" color="blue" @click="store.methods.listreview(card,'+',store.state.shoppingcart)">Add to Cart</v-btn>
-			</v-label>
+			</p>
 			<br>
 			<br>
-			<v-label>Category: {{ card.productgroup }}</v-label>
+			<p>Category: {{ card.productgroup }}</p>
 			<br>
-			<v-label>Publisher: {{ card.manufacturer }}</v-label>
+			<p>Publisher: {{ card.manufacturer }}</p>
 		</div>
 		<br>
 		<div>
 			<v-expansion-panels>
 					<v-expansion-panel>
-						<v-expansion-panel-title>Details</v-expansion-panel-title>
-						<v-expansion-panel-text v-html="card.description"></v-expansion-panel-text>
+						<v-expansion-panel-title
+						>Details</v-expansion-panel-title>
+						<v-expansion-panel-text
+						  v-html="card.description"
+						></v-expansion-panel-text>
 					</v-expansion-panel>
 				</v-expansion-panels>
 		</div>

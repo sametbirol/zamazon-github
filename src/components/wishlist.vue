@@ -9,6 +9,7 @@
   </template>
 
   <v-card max-width="300">
+    <label v-if="store.state.wishlist.length == 0">No any wishes</label>
     <v-card-item v-for="element in store.state.wishlist" :key="element.id" max-width="300">
       <v-img :src="element.images.small.url" height="100"></v-img>
       {{ element.title.slice(0,20) + "..."}}

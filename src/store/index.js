@@ -1,5 +1,5 @@
 
-import { reactive} from 'vue'
+import { reactive , computed, onBeforeMount} from 'vue'
 
 const state = reactive({
     drawer: null,
@@ -26,7 +26,7 @@ const methods = {
      return state.drawer = !state.drawer;
     },
     fetchdata(){
-        fetch('https://raw.githubusercontent.com/christkv/ecommerce/master/preload_data/categories.json')
+         fetch('https://raw.githubusercontent.com/christkv/ecommerce/master/preload_data/categories.json')
         .then(x => x.json())
         .then(x => state.rawCategories = x)
         .then(() => methods.lister())
@@ -39,17 +39,19 @@ const methods = {
         .then(() =>methods.categorize_get(1))
     },
     lister(){
+        let list = []
         for(const item of state.rawCategories){
             item.isAparent = (item.children.length > 0 && item.name != '/') ? true : false
             if(item.isAparent){
-                state.parents.push(item.name.toUpperCase())
+                list.push(item.name.toUpperCase())
                 state.children.push(item.children)
             }
         }
+        state.parents = list
     },
     cleandata(){
         let ok = 0
-        let id = 5
+        let id = 0
         const stack = []
         stack.push(state.rawProduct[0])
         for(const item of state.rawProduct){
@@ -69,11 +71,10 @@ const methods = {
                 }
                 stack.push(item)
             }
-            stack.forEach(element => {
-                element.id = id++
-            });
-            }
-        
+        }
+        stack.forEach(element => {
+            element.id = id++
+        });
         state.cleanProduct = stack
     },
     categorize_get(arg){
@@ -102,24 +103,32 @@ const methods = {
         state.categoriesdict = myDict
 
     },
-    listreview(product,arg,liste){
-        if(arg == '+'){
-            liste.push(product)
-            if(liste === state.shoppingcart){
-                state.cost += product.price
-            }
+
+    addlist(product,liste){
+        if(liste.indexOf(product) >= 0) {
+            liste[liste.indexOf(product)].times += 1
         }
-        else if(arg == '-') {
-            liste.splice(liste.indexOf(product),1)
-            if(liste == state.shoppingcart){
-                state.cost -= product.price
-            }
+        else {
+            product.times = 1
+            liste.push(product)
         }
     },
+    removelist(product,liste){
+        liste.splice(liste.indexOf(product),1)
+    },
+}
+
+const getters = {
+    cost: computed(() => {
+        let coste = 0 
+        for(const product of state.shoppingcart) coste += product.price  * product.times
+        return coste / 100
+    })
 }
 
 export default{
     state,
     methods,
+    getters
     
 }

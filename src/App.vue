@@ -1,13 +1,10 @@
 <template>
-  <router-view />
+   <Default/>
 </template>
 
-<script>
-  import store from '@/store'
-  import { provide } from 'vue'
-  export default{
-    setup(){
-      provide('store', store)
-    }
-}
+<script setup>
+import Default from '@/layouts/default/Default.vue'
+import store from '@/store'
+import { provide } from 'vue'
+provide('store', store)
 </script>

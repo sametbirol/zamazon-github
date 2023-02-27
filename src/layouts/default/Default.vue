@@ -1,14 +1,20 @@
 <template>
   <v-app>
-    <default-bar />
-    <v-main>
-      <router-view />
-    </v-main>
+    <sidebar/>
+    <appbar/>
+    <router-view/>
     
   </v-app>
 </template>
 
 <script setup>
-  import DefaultBar from './AppBar.vue'
-  
+import appbar from './appbar.vue'
+import sidebar from './sidebar.vue'
+import { inject, onBeforeMount } from 'vue'
+const store= inject('store')
+onBeforeMount(() => {
+  store.methods.fetchdata()
+})
+
+
 </script>

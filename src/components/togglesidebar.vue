@@ -1,10 +1,11 @@
 <template>
     <v-btn
+      @click="store.methods.toggleDrawer"
       class="mx-2"
-      fab
-      dark
       color="grey"
-      @click="store.methods.toggleDrawer" >
+      dark
+      fab
+    >
       <v-icon dark>
         mdi-format-list-bulleted-square
       </v-icon>

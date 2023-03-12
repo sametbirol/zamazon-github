@@ -1,45 +1,18 @@
 <template>
-  <v-menu
-    color="primary"
-    max-width="1000"
-  >
-  <template v-slot:activator="{ props }">
-    <v-btn v-bind="props">
-    <v-icon x-large>mdi-bookmark</v-icon>
-    Wish List
-    </v-btn>
-  </template>
+  <v-btn @click="modals.deleteNote = true">
+    <v-icon x-large>mdi-heart</v-icon>
+    Wishlist
+  </v-btn>
 
-  <v-card max-width="300">
-    <label
-      v-if="store.state.wishlist.length == 0"
-    > Click the heart button!!</label>
-    <v-card-item
-      v-for="element in store.state.wishlist"
-      :key="element.id"
-      max-width="300"
-    >
-      <v-img :src="element.images.small.url" height="100"></v-img>
-      {{ element.title.slice(0,20) + "..."}}
-      <div style="color:green"> {{ element.price / 100 }}$ </div>
-      <button @click="store.methods.removelist(element,store.state.wishlist)">x</button>
-    </v-card-item>
-  </v-card>
-
-</v-menu>
+  <WishListModal v-if="modals.deleteNote" v-model="modals.deleteNote">
+  </WishListModal>
 </template>
 
-<script>
-import { inject } from 'vue'
+<script setup>
+import WishListModal from '@/modals/wishlistmodal.vue'
+import { reactive } from 'vue';
 
-export default {
-  name: 'HomeComp',
-  setup(){
-    const store = inject('store')
-
-    return{
-      store,
-    }
-  }
-}
+const modals = reactive({
+  deleteNote: false
+})
 </script>

@@ -1,27 +1,35 @@
 <template>
   <v-dialog
     v-model="props.modelValue"
-    class="w-50 overflow-auto"
+    class="w-60 overflow-auto"
   >
-    <v-container class=" overflow-auto" >
-    <v-list
-    ref="modalCardRef">
-    <v-row class="flex-column align-center">
-      <v-list-item
+    <v-container class=" overflow-auto" ref="modalCardRef">
+    <v-card
+    class="bg-grey-lighten-4"
+    >
+
+      <v-card
         v-for="element in store.state.shoppingcart"
         :key="element.id"
-        class="ma-10"
+        class="ma-10 bg-yellow-lighten-5"
+        variant="flat"
       >
-        <v-list-item-content>
-          
-            <v-list-item-avatar
-          
-          ><v-img
+      <v-row class="align-center">
+      <v-col
+      cols="3">
+        <v-img
           :src="element.images.large.url"
-          height="200px"
-            ></v-img>
-          </v-list-item-avatar>
-          <v-list-item-title>{{ element.title.slice(0,20) + "..."}} x {{ element.times }}</v-list-item-title>
+          height="100px"
+          ></v-img>
+      </v-col>
+      <v-col
+      cols="5"
+      >
+      {{ element.title}} x {{ element.times }}
+      </v-col>
+        
+
+        <v-col cols="4" >
           <v-btn
             @click="store.methods.removelist(element,store.state.shoppingcart)"
           >x</v-btn><v-btn
@@ -30,14 +38,14 @@
             @click="element.times += 1"
           >+</v-btn>
 
-          <div style ="color:green"> {{ element.price / 100 }}$ </div>
-          
-        </v-list-item-content>
-      
-      </v-list-item>
-    </v-row>
+           {{ element.price / 100 }}$     
+      </v-col>
+
+          </v-row>
+      </v-card>
+
     <v-container >Cost: {{ store.getters.cost }}$</v-container>
-    </v-list>
+    </v-card>
     
       <!-- <v-card
         ref="modalCardRef"

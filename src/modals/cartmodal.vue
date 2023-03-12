@@ -1,44 +1,37 @@
 <template>
-  <v-dialog
-    v-model="props.modelValue"
-    class="w-50 overflow-auto"
-  >
-    <v-container class=" overflow-auto" >
-    <v-list
-    ref="modalCardRef">
-    <v-row class="flex-column align-center">
-      <v-list-item
-        v-for="element in store.state.shoppingcart"
-        :key="element.id"
-        class="ma-10"
-      >
-        <v-list-item-content>
-          
-            <v-list-item-avatar
-          
-          ><v-img
-          :src="element.images.large.url"
-          height="200px"
-            ></v-img>
-          </v-list-item-avatar>
-          <v-list-item-title>{{ element.title.slice(0,20) + "..."}} x {{ element.times }}</v-list-item-title>
-          <v-btn
-            @click="store.methods.removelist(element,store.state.shoppingcart)"
-          >x</v-btn><v-btn
-            @click="handlenegativeclick(element)"
-          >-</v-btn><v-btn
-            @click="element.times += 1"
-          >+</v-btn>
+  <v-dialog v-model="props.modelValue" class="w-60 overflow-auto">
+    <v-container class=" overflow-auto" ref="modalCardRef">
+      <v-card class="bg-grey-lighten-4">
 
-          <div style ="color:green"> {{ element.price / 100 }}$ </div>
-          
-        </v-list-item-content>
-      
-      </v-list-item>
-    </v-row>
-    <v-container >Cost: {{ store.getters.cost }}$</v-container>
-    </v-list>
-    
+        <v-card v-for="element in store.state.shoppingcart" :key="element.id" class="ma-10 bg-yellow-lighten-5"
+          variant="flat">
+          <v-row class="align-center">
+            <v-col cols="3">
+              <v-img :src="element.images.large.url" height="100px"></v-img>
+            </v-col>
+            <v-col cols="5">
+              {{ element.title }} x {{ element.times }}
+            </v-col>
+
+
+            <v-col cols="2">
+              <v-btn @click="handlenegativeclick(element)">-</v-btn>
+              <v-btn @click="element.times += 1">+</v-btn>
+
+              
+            </v-col>
+            <v-col cols="1">
+              {{ element.price/100 }} $
+            </v-col>
+            <v-col cols="1">
+              <v-btn @click="store.methods.removelist(element, store.state.shoppingcart)">x</v-btn>
+            </v-col>
+          </v-row>
+        </v-card>
+
+        <v-container>Cost: {{ store.getters.cost_cart }}$</v-container>
+      </v-card>
+
       <!-- <v-card
         ref="modalCardRef"
       >
@@ -68,16 +61,17 @@
   </v-dialog>
 </template>
 <script setup>
-import { inject ,ref} from 'vue'
+import { inject, ref } from 'vue'
 import { onClickOutside } from '@vueuse/core'
+const store = inject('store')
 
 // props
 
 const props = defineProps({
-    modelVlaue: {
-        type: Boolean,
-        default: false
-    }
+  modelValue: {
+    type: Boolean,
+    default: false
+  }
 })
 
 /*
@@ -85,22 +79,21 @@ const props = defineProps({
 */
 const emit = defineEmits(['update:modelValue'])
 const closeModal = () => {
-    emit('update:modelValue',false)
+  emit('update:modelValue', false)
 }
 //  handle negative clicked
 
 const handlenegativeclick = ((el) => {
-    if (el.times <= 1) {
-        store.methods.removelist(el,store.state.shoppingcart)
-    }
-    else el.times -= 1
+  if (el.times <= 1) {
+    store.methods.removelist(el, store.state.shoppingcart)
+  }
+  else el.times -= 1
 })
 const modalCardRef = ref(null)
 /*
 on clik outside
 */
-onClickOutside(modalCardRef,closeModal)
+onClickOutside(modalCardRef, closeModal)
 
-const store = inject('store')
 
 </script>
